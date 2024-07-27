@@ -30,12 +30,12 @@ pipeline{
         }
         stage('build the image'){
           steps{
-               sh 'docker build -t bankimage .'
+               sh 'docker build -t healthimage .'
            }
          }
         stage('Run the container with port mapping'){
             steps{
-                sh 'docker run -dt -p 8082:8082 --name c03 bankimage'
+                sh 'docker run -dt -p 8082:8082 --name c01 healthimage'
             }
         }   
     }
