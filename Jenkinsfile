@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage('Checkout'){
             steps{
-                 git url:'https://github.com/sumith07/star-agile-health-care/', branch: "master"
+                 git url:'https://github.com/sumith07/star-agile-health-care.git/', branch: "master"
             }
         }
         stage('Build Maven'){
