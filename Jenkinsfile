@@ -34,7 +34,7 @@ pipeline {
             }
         }
         stage('Deploy to k8s') {
-            when { branch 'master' }
+            when { expression { return env.GIT_BRANCH == 'master' || env.GIT_BRANCH == 'origin/master' } }
             steps {
                 script {
                     kubernetesDeploy(configs: 'deploymentservice.yaml', kubeconfigId: "${KUBECONFIG_CREDENTIALS_ID}")
