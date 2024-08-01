@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/sumith07/star-agile-health-care.git', 
+                git url: 'https://github.com/sumeeth07/star-agile-health-care.git', 
                     branch: 'master', 
                     credentialsId: "${GIT_CREDENTIALS_ID}"
             }
