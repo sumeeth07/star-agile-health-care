@@ -1,42 +1,42 @@
-pipeline{
+pipeline {
     agent any
     stages{
-        stage('checkout the code from github'){
+        stage('Checkout'){
             steps{
-                 git url: 'https://github.com/sumeeth07/star-agile-health-care.git/'
-                 echo 'github url checkout'
+                 git url:'https://github.com/sumith07/star-agile-health-care/', branch: "master"
             }
         }
-        stage('Compiling the code'){
+        stage('Build Maven'){
             steps{
-                echo 'starting compiling'
-                sh 'mvn compile'
+               
+               sh 'mvn clean install'
             }
         }
-        stage('code test'){
+        stage('Build docker image'){
             steps{
-                sh 'mvn test'
+                script{
+                    sh 'docker build -t sumith596/healthcareme:v1 .'
+                }
             }
         }
-        stage('mvn QA'){
-            steps{
-                sh 'mvn checkstyle:checkstyle'
+          stage('Docker login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-pwd', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
+                    sh "echo $PASS | docker login -u $USER --password-stdin"
+                    sh 'docker push sumith596/healthcareme:v1'
+                }
             }
         }
-        stage('package the code'){
+        
+        
+        stage('Deploy to k8s'){
+            when{ expression {env.GIT_BRANCH == 'master'}}
             steps{
-                sh 'mvn package'
+                script{
+                     kubernetesDeploy (configs: 'deploymentservice.yaml' ,kubeconfigId: 'k8sconfigpwd')
+                   
+                }
             }
         }
-        stage('build the image'){
-          steps{
-               sh 'docker build -t healthimage .'
-           }
-         }
-        stage('Run the container with port mapping'){
-            steps{
-                sh 'docker run -dt -p 8082:8082 --name c01 healthimage'
-            }
-        }   
     }
 }
