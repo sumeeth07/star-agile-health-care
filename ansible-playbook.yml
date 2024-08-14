@@ -7,7 +7,7 @@
       command: apt-get update
 
     - name: Install required packages
-      command: apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+      command: apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
 
     - name: Add Docker’s official GPG key
       shell: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
