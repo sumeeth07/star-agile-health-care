@@ -32,7 +32,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t sumith596/healthcareme:latest .'
-                sh 'docker run -itd -p 8090:8082 sumith596/healthcareme:latest'
+                sh 'docker run -itd -p 8082:8082 sumith596/healthcareme:latest'
             }
         }
            stage('log into dockerhub and push the image to docker hub'){
