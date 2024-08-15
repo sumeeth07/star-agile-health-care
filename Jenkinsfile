@@ -54,8 +54,8 @@ pipeline {
         script {
             echo 'Deploying application to Kubernetes'
             kubernetesDeploy(
-                configs: 'deploymentservice.yaml',  // This is your Kubernetes manifest file
-                kubeconfigId: 'k8sconfigpwd'        // Jenkins credentials ID for kubeconfig
+                configs: 'deploymentservice.yaml', 
+                kubeconfigId: 'k8sconfigpwd'        
             )
         }
     }
